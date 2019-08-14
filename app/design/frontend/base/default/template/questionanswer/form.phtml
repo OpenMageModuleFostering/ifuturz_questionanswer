@@ -124,11 +124,17 @@ jQuery(document).ready(function() {
 	
 	jQuery('#searchque').click(function(){
 		
-		var searchval = jQuery("#searchtext").val();
+		var searchval = jQuery("#searchtext").val();		
+		if(searchval == '')
+		{
+			alert("Please insert the searched keword.")
+			jQuery("#searchtext").focus();
+			return false;
+		}
 		jQuery.post("<?php echo Mage::getBaseUrl()?>questionanswer/index/searchquestion", {searchvalue: searchval, proid: '<?php echo $pid?>' },		
 			function(data) 
 			{				
-				pattern = new RegExp(searchval, 'g');
+				pattern = new RegExp(searchval, 'ig');
 				data = data.replace(pattern,'<span class="highlight">'+ searchval + '</span>' );				
 				jQuery('#updatequeans').html(data);
 			});

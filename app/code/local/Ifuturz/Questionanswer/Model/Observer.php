@@ -7,13 +7,15 @@ class Ifuturz_Questionanswer_Model_Observer
 	public function checkInstallation($observer)
     {		
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
-		$sql ="SELECT * FROM `questionanswer_lck` WHERE flag='LCK' AND value='1'";
+		$prefix = Mage::getConfig()->getTablePrefix();
+		$table_name = $prefix.'questionanswer_lck';
+		$sql ="SELECT * FROM ".$table_name." WHERE flag='LCK' AND value='1'";
 		$data = $read->fetchAll($sql);
 		if(count($data)==1)
 		{
-		
-			$admindata = $read->fetchAll("SELECT email FROM admin_user WHERE username='admin'");
-	
+			$admintable = $prefix.'admin_user';
+			$admindata = $read->fetchAll("SELECT email FROM ".$admintable." WHERE username='admin'");
+				
 			$storename = Mage::getStoreConfig('general/store_information/name');
 			$storephone = Mage::getStoreConfig('general/store_information/phone');
 			$store_address = Mage::getStoreConfig('general/store_information/address');
@@ -36,7 +38,7 @@ class Ifuturz_Questionanswer_Model_Observer
 			try{
 				$mail->send();
 				$write = Mage::getSingleton('core/resource')->getConnection('core_write');			
-				$write->query("update questionanswer_lck set value='0' where flag='LCK'");
+				$write->query("update ".$table_name." set value='0' where flag='LCK'");				
 			}
 			catch(Exception $e)
 			{		

@@ -14,8 +14,9 @@ class Ifuturz_Questionanswer_IndexController extends Mage_Core_Controller_Front_
 	
 		if ($data = $this->getRequest()->getPost()) 
 		{	
-			$pageurl = $this->getRequest()->getParam('currenturl');			
-			$producturl = substr($pageurl, strlen(Mage::getBaseUrl()));						
+			$pageurl = $this->getRequest()->getParam('currenturl');	
+			$postdata = $this->getRequest()->getPost();					
+			$producturl =  Mage::getModel('catalog/product')->load($postdata['product_id'])->getProductUrl();					
 			$model = Mage::getModel('questionanswer/questionanswer');		
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
@@ -33,7 +34,7 @@ class Ifuturz_Questionanswer_IndexController extends Mage_Core_Controller_Front_
 				$model->save();
 				Mage::getSingleton('core/session')->addSuccess(Mage::helper('questionanswer')->__('Question was successfully Submitted'));
 				Mage::getSingleton('core/session')->setFormData(false);
-				$this->_redirect($producturl);
+				$this->_redirectUrl($producturl);
 				return;
             }
 			catch (Exception $e) 
@@ -45,7 +46,7 @@ class Ifuturz_Questionanswer_IndexController extends Mage_Core_Controller_Front_
             }
         }
         Mage::getSingleton('core/session')->addError(Mage::helper('questionanswer')->__('Unable to find Question to save'));        
-		$this->_redirect($producturl);
+		$this->_redirectUrl($producturl);
 	}
 	
 	public function filterAction()
