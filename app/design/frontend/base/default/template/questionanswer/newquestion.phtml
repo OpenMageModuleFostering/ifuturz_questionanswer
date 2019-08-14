@@ -1,0 +1,83 @@
+<?php
+/**
+ * @package Ifuturz_Questionanswer
+ */
+?>
+<div class="border-wrapper" style="display:none" id="quecustomform">
+  <?php 
+
+$proid = Mage::registry('product')->getId();
+$productload = Mage::getModel('catalog/product')->load($proid);
+
+?>
+  <form method="post" action="<?php echo $this->getUrl('questionanswer/index/save')?>" name="queform" id="queform">
+    <input type="hidden" name="product_id" value="<?php echo $proid; ?>" />
+    <input type="hidden" name="currenturl" value="<?php echo Mage::helper('core/url')->getCurrentUrl()?>" />
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" class="newqueform">
+      <tbody>
+        <tr>
+          <td width="100%" style="text-align:justify;" colspan="2">
+          <span class="categoryTitle"> <?php /*?><?php echo $this->__('Your Question')?><a href=<?php echo $productload->getProductUrl();?>><?php echo $productload->getName();?></a> </span><br><?php */?></span>
+            <span class="proddesc" style="font-weight:normal">
+            <?php echo $this->__('We will be Happy to Help You!!! <br/>
+Teams of professionally trained staff are always at your service to take care of all your queries. 
+<span style="font-weight:bold">Please note:</span> Do not use this form, if you have any questions in-relate to order you placed, product availability, product return and shipping policies. In such cases, call us direct on hotline number (1.111.111.1111) and talk to our 
+')?> <a href="<?php echo $this->getUrl('service-and-support')?>"><?php echo $this->__('customer care executive')?></a><?php echo $this->__('.')?></span><br>
+            <br></td>
+       
+        </tr>
+        <tr>
+          <td><?php echo $this->__('Your question: (limit to 110 characters)')?></td>
+                  <td><input type="text" class="input-text required-entry" size="45" maxlength="110" name="question"></td></tr>
+        
+                <tr>
+                  <td width="150" valign="top" class="proddesc"><?php echo $this->__('A little more detail: (optional)')?></td>
+                  
+                          <td class="proddesc"><textarea class="proddesc" rows="5" cols="40" wrap="soft" name="question_description"></textarea></td>
+                        </tr>
+                       
+                        <tr>
+                          <td align="right" class="smallText"></td>
+                        </tr>
+                  
+             
+                <tr style="height: 32px;">
+                  <td width="150" class="proddesc"><?php echo $this->__('Your name:')?></td>
+                  <td><input type="text" class="input-text required-entry" size="30" maxlength="40" name="name"></td>
+                </tr>
+                <tr>
+                  <td width="150" class="proddesc"><?php echo $this->__('Your email address:')?></td>
+                  <td><input type="text" class="input-text required-entry validate-email" size="30" maxlength="40" name="email" <?php if(Mage::helper('customer')->isLoggedIn()):?> value="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail()?>" readonly="readonly"<?php endif;?>></td>
+                </tr>
+                <tr>
+                  <td width="150" class="proddesc"><?php echo $this->__('Your location:')?><br>
+                    <small>(city, state)</small></td>
+                  <td><input type="text" class="input-text required-entry" size="30" maxlength="40" name="location">
+                  </td>
+                </tr>
+                <tr>
+                  <td width="150" class="proddesc"><a class="tooltips"><?php echo $this->__('Send this question as private?')?>
+<span><?php echo $this->__("If you don't want to display your question and its answer to this page(i.e. publically), please tick mark the checkbox and your question will be hidden from other users. ")?></span></a>                   
+                  </td>
+                  <td>
+                      <select id="private" name="is_private">
+                          <option value="no" selected="selected"><?php echo $this->__('No')?></option>
+                          <option value="yes"><?php echo $this->__('Yes')?></option>
+                      </select>
+                 </td>
+                </tr>
+                <tr>
+                  <td colspan="2"><input type="submit" value="Submit Question" class="button blue"></td>
+                </tr>
+              <input type="hidden" name="customer_id" value="<?php echo Mage::getSingleton('customer/session')->getId()?>" />
+              <input type="hidden" name="qa_asked_user_id" value="<?php echo Mage::getSingleton('customer/session')->getId()?>" />
+              <input type="hidden" name="store_id" value="<?php echo Mage::app()->getStore()->getStoreId()?>" />
+      </tbody>
+    </table>
+  </form>
+</div>
+<script type="text/javascript">
+//< ![CDATA[
+var customForm = new VarienForm('queform');
+//]]>
+</script>

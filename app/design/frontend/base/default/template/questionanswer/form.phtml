@@ -1,0 +1,139 @@
+<?php
+/**
+ * @package Ifuturz_Questionanswer
+ */
+?>
+<div id="questions-header">
+<div class="question-title">
+<?php echo $this->__('Product Question')?>
+</div>
+<?php $id = Mage::registry('product')->getId(); ?>
+<?php $quecollections = Mage::getModel('questionanswer/questionanswer')->getCollection()->addFieldToFilter('product_id',$id)->addFieldToFilter('enabled_on_frontend','yes')->setOrder('created_at', 'asc')->getData();?>	
+	<div class="tab-col-left" style="width:100%;">
+    <?php $pid = Mage::registry('product')->getId();?>    
+        <?php echo $this->getLayout()->createBlock('catalog/product')->setTemplate('questionanswer/newquestion.phtml')->toHtml(); ?>     
+         <a style="float:left;" class="button blue" id="askque1" onclick="dispQueform();" > <img src="<?php echo  $this->getSkinUrl('images/questionanswer/chat_image.png');?>" alt="Ask a Question"> <?php echo $this->__('Ask a Question');?></a>
+   
+        <p style="float:right;margin-left:40px;"><strong><?php echo $this->__('Sort By:')?></strong>&nbsp;      
+         <select class="sort-select" name="sort_questions" id="sortque">
+         	<option selected="" value="datenew"><?php echo $this->__('Newest First')?></option>
+            <option value="dateold"><?php echo $this->__('Oldest First')?></option>
+        </select>
+       </p>
+       <p style="float:right; margin-right: 50px">   
+        <input type="text" value="" placeholder="Search within this product's Q&amp;A..." class="search-box input-text" id="searchtext" name="keywords">
+        &nbsp;&nbsp;
+        <button style="border:0 !important;" class="blue" type="button" value="search" title="Search" id="searchque"><span><?php echo $this->__('Search')?></span></button></p>
+	</div>    
+	<p class="clear-line"></p>	
+</div>
+<?php /* start code of qa*/ ?>
+<div id="updatequeans">
+<?php $quecollections = $this->getCurrentQuestionanswer($pid); ?>
+<?php if($quecollections):?>
+	<?php $i=1; ?>
+	<?php foreach($quecollections as $quedata):?>
+    	<?php if($quedata['answer']!=''):?>        
+			<?php if($i%2==0):?>
+                <div class="q-a alternate">
+            <?php else:?>
+                <div class="q-a"> 
+            <?php endif;?>                
+				
+				<?php if(Mage::helper('customer')->isLoggedIn()):?>
+                                
+                    <span class="likecount" id="dislikecount_<?php echo $quedata['questionanswer_id']?>"><?php echo $this->getQADisLikes($quedata['questionanswer_id'])?></span>
+					<a class="tooltips" id="dislike" onclick="setDisLike('<?php echo $quedata['questionanswer_id']?>')"><i class="fa fa-thumbs-down"></i>
+                <span>Dislike</span></a>
+                
+					<span class="likecount" id="likecount_<?php echo $quedata['questionanswer_id']?>"><?php echo $this->getQALikes($quedata['questionanswer_id'])?></span>
+					<a class="tooltips" id="like" onclick="setLike('<?php echo $quedata['questionanswer_id']?>')"><i class="fa fa-thumbs-up"></i>
+                    <span>Like</span></a>
+    
+                <?php endif;?>                
+
+                <?php $createddate = date('F-d-Y',strtotime($quedata['created_at']));
+                $finaldate = str_replace('-',', ',preg_replace('/-/',' ',$createddate,1));			
+                ?>
+                <p><span class="right"><?php echo $finaldate?></span><strong><?php echo $quedata['name']; ?></strong><?php echo " from ".$quedata['location']." asked:"; ?> <br></p>
+                <p class="clear-line"></p>
+                <p>
+                    <span class="qa-title">Q</span>
+                    <span class="qa-info"><strong><?php echo $quedata['question']; ?></strong></span>
+                </p>
+                <p class="clear-line"></p>
+                <p>
+                    <span class="qa-title">A</span>
+                    <span class="qa-info"><?php echo $quedata['answer']; ?></span>
+                </p>
+                <p class="clear-line"></p>              
+            </div>
+           <?php $i++;?>
+       <?php endif;?>
+	<?php endforeach; ?>
+
+<?php endif;?>
+</div>
+<script type="text/javascript" language="javascript">
+
+function dispQueform()
+{	
+	document.getElementById('quecustomform').style.display='';
+	document.getElementById('askque1').style.display='none';
+}
+<?php if(Mage::helper('customer')->isLoggedIn()):?>
+function setLike(que_id)	
+{	
+	jQuery.ajax({
+		type: 'POST',
+		url: "<?php echo Mage::getBaseUrl()?>questionanswer/index/setLike",
+		data: {questionId: que_id, customerId: <?php echo Mage::getSingleton('customer/session')->getId()?>},
+		dataType: 'json',
+		success: function(data) {	
+		jQuery('#likecount_'+que_id).html(data.like);
+		jQuery('#dislikecount_'+que_id).html(data.dislike);
+		}
+	});
+}
+function setDisLike(que_id)	
+{	
+	jQuery.ajax({
+		type: 'POST',
+		url: "<?php echo Mage::getBaseUrl()?>questionanswer/index/setDisLike",
+		data: {questionId: que_id,customerId: <?php echo Mage::getSingleton('customer/session')->getId()?> },
+		dataType: 'json',
+		success: function(data) {		
+		jQuery('#likecount_'+que_id).html(data.like);
+		jQuery('#dislikecount_'+que_id).html(data.dislike);
+		}
+	});
+
+}
+<?php endif;?>
+jQuery(document).ready(function() { 
+
+	jQuery('#sortque').change(function() {
+  		
+		var sortval = jQuery("#sortque option:selected").val();
+		 jQuery.post("<?php echo Mage::getBaseUrl()?>questionanswer/index/filter", {sortingval: sortval, proid: '<?php echo $pid?>' },		
+			function(data) 
+			{				
+				jQuery('#updatequeans').html(data);
+			});
+	});
+	
+	jQuery('#searchque').click(function(){
+		
+		var searchval = jQuery("#searchtext").val();
+		jQuery.post("<?php echo Mage::getBaseUrl()?>questionanswer/index/searchquestion", {searchvalue: searchval, proid: '<?php echo $pid?>' },		
+			function(data) 
+			{				
+				pattern = new RegExp(searchval, 'g');
+				data = data.replace(pattern,'<span class="highlight">'+ searchval + '</span>' );				
+				jQuery('#updatequeans').html(data);
+			});
+                
+	});
+	  
+});
+</script>

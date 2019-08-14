@@ -1,0 +1,98 @@
+<?php
+/**
+ * @package Ifuturz_Questionanswer
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('My Product Question-Answer Lists') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $quecollections = $this->getCollection(); ?>
+<?php if(count($quecollections)==0):?>
+	<p><?php echo $this->__('You have not asked any question for any product.') ?></p>
+<?php endif;?>
+<?php echo $this->getPagerHtml(); ?>
+<div id="updatequeans">
+<?php if($quecollections):?>
+	<?php $i=1; ?>
+	<?php foreach($quecollections as $quedata):?>
+    	<?php if($quedata['answer']!=''):?>        
+			<?php if($i%2==0):?>
+                <div class="q-a alternate">
+            <?php else:?>
+                <div class="q-a"> 
+            <?php endif;?>                
+				
+				<?php if(Mage::helper('customer')->isLoggedIn()):?>
+                                
+                    <span class="likecount" id="dislikecount_<?php echo $quedata['questionanswer_id']?>"><?php echo $this->getQADisLikes($quedata['questionanswer_id'])?></span>
+					<a class="tooltips" id="dislike" onclick="setDisLike('<?php echo $quedata['questionanswer_id']?>')"><i class="fa fa-thumbs-down"></i>
+                <span>Dislike</span></a>
+                
+					<span class="likecount" id="likecount_<?php echo $quedata['questionanswer_id']?>"><?php echo $this->getQALikes($quedata['questionanswer_id'])?></span>
+					<a class="tooltips" id="like" onclick="setLike('<?php echo $quedata['questionanswer_id']?>')"><i class="fa fa-thumbs-up"></i>
+                    <span>Like</span></a>
+    
+                <?php endif;?>                
+
+                <?php $createddate = date('F-d-Y',strtotime($quedata['created_at']));
+                $finaldate = str_replace('-',', ',preg_replace('/-/',' ',$createddate,1));			
+                ?>
+                <p><span class="right"><?php echo $finaldate?></span><strong><?php echo $quedata['name']; ?></strong><?php echo " from ".$quedata['location']." asked for product:"; ?> 
+                <?php $product = $this->getProductDetail($quedata['product_id'])?>
+                <a href="<?php echo $product->getProductUrl()?>"><?php echo $product->getName()?></a>
+                <br></p>
+                <p class="clear-line"></p>
+                <p>
+                    <span class="qa-title">Q</span>
+                    <span class="qa-info"><strong><?php echo $quedata['question']; ?></strong></span>
+                </p>
+                <p class="clear-line"></p>
+                <p>
+                    <span class="qa-title">A</span>
+                    <span class="qa-info"><?php echo $quedata['answer']; ?></span>
+                </p>
+                <p class="clear-line"></p>              
+            </div>
+           <?php $i++;?>
+       <?php endif;?>
+	<?php endforeach; ?>
+<?php endif;?>
+</div>
+<?php echo $this->getPagerHtml(); ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->getUrl('customer/account/') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+</div>
+
+<script type="text/javascript" language="javascript">
+
+function setLike(que_id)	
+{	
+	jQuery.ajax({
+		type: 'POST',
+		url: "<?php echo Mage::getBaseUrl()?>questionanswer/index/setLike",
+		data: {questionId: que_id, customerId: <?php echo Mage::getSingleton('customer/session')->getId()?>},
+		dataType: 'json',
+		success: function(data) {	
+		jQuery('#likecount_'+que_id).html(data.like);
+		jQuery('#dislikecount_'+que_id).html(data.dislike);
+		}
+	});
+
+	
+}
+function setDisLike(que_id)	
+{	
+	jQuery.ajax({
+		type: 'POST',
+		url: "<?php echo Mage::getBaseUrl()?>questionanswer/index/setDisLike",
+		data: {questionId: que_id,customerId: <?php echo Mage::getSingleton('customer/session')->getId()?> },
+		dataType: 'json',
+		success: function(data) {		
+		jQuery('#likecount_'+que_id).html(data.like);
+		jQuery('#dislikecount_'+que_id).html(data.dislike);
+		}
+	});
+
+}
+</script>

@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Ifuturz_Questionanswer>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Ifuturz_Questionanswer>
+	</modules>
+</config>

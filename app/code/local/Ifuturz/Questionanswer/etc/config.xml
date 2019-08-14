@@ -1,0 +1,163 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Ifuturz_Questionanswer>
+			<version>0.1.1</version>
+		</Ifuturz_Questionanswer>
+	</modules>
+	
+	<frontend>
+        <routers>
+            <questionanswer>
+                <use>standard</use>
+                <args>
+                    <module>Ifuturz_Questionanswer</module>
+                    <frontName>questionanswer</frontName>
+                </args>
+            </questionanswer>			
+        </routers>
+        <layout>
+            <updates>
+                <questionanswer>
+                    <file>questionanswer.xml</file>
+                </questionanswer>
+            </updates>
+        </layout>
+    </frontend>
+	
+	<admin>
+        <routers>
+			<questionanswer>
+				<use>admin</use>
+				<args>
+					<module>Ifuturz_Questionanswer</module>
+					<frontName>questionanswer</frontName>
+				</args>
+			</questionanswer>
+        </routers>
+		 
+    </admin>
+	<adminhtml>
+		<menu>
+			<questionanswer module="questionanswer">
+				<title>Product Question Answers</title>
+				<sort_order>11</sort_order>
+				<children>
+					<items module="questionanswer">
+					<title>Manage QuestionAnswer</title>
+					<action>questionanswer/adminhtml_questionanswer</action>
+					</items>
+				</children>
+			</questionanswer>
+		</menu>
+		
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <questionanswer_options>
+                                            <title>Questionanswer Options</title>
+                                        </questionanswer_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+						<items module="questionanswer">
+							<children>
+							<title>Questionanswer</title>
+							</children>
+						</items>						
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<questionanswer>
+					<file>questionanswer.xml</file>
+				</questionanswer>
+			</updates>
+		</layout>		
+	</adminhtml>	
+	
+	<global>
+		<models>
+			<questionanswer>
+				<class>Ifuturz_Questionanswer_Model</class>
+				<resourceModel>questionanswer_mysql4</resourceModel>
+			</questionanswer>
+			<likedislike>
+				<class>Ifuturz_Questionanswer_Model_Likedislike</class>
+				<resourceModel>likedislike_mysql4</resourceModel>
+			</likedislike>
+			<questionanswer_mysql4>
+				<class>Ifuturz_Questionanswer_Model_Mysql4</class>
+				<entities>
+					<questionanswer>
+						 <table>questionanswer</table>
+					</questionanswer>
+					<likedislike>
+						 <table>questionanswer_like_dislike</table>
+					</likedislike>
+				</entities>
+			</questionanswer_mysql4>
+		</models>
+		
+		 <resources>
+            <questionanswer_setup>
+                <setup>
+                    <module>Ifuturz_Questionanswer</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </questionanswer_setup>
+            <questionanswer_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </questionanswer_write>
+            <questionanswer_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </questionanswer_read>
+        </resources>
+		
+		<blocks>
+			<questionanswer>
+				<class>Ifuturz_Questionanswer_Block</class>
+			</questionanswer>
+		</blocks>
+		
+		<helpers>
+			<questionanswer>
+                <class>Ifuturz_Questionanswer_Helper</class>
+            </questionanswer>
+		</helpers>
+		<template>
+			<email>
+				<queans_template  module="questionanswer">
+					<label>Product Question Answers</label>
+					<file>question_answer.html</file>  // this specifies the path where the custom template is located
+					<type>html</type>
+				</queans_template>
+			</email>
+        </template>
+		<events>
+			<controller_action_predispatch>
+				<observers>
+					<questionanswer_install>
+						<class>Ifuturz_Questionanswer_Model_Observer</class>
+						<method>checkInstallation</method>
+					</questionanswer_install>					
+				</observers>
+			</controller_action_predispatch>
+		</events>
+	</global>
+	
+</config>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package>
+    <name>Ifuturz_Questionanswer</name>
+    <version>0.1.0</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Product Question-Answer extension is a robust Magento extension that works as a question bank and let your customers to easily clear their doubts on the product page itself. It helps the store owners to answer the customer questions and clear their doubts with them in detail. &#xD;
+&#xD;
+Moreover, it is helpful for the new customers to know more about the product before buying. </summary>
+    <description>1) The extension adds a special &#x201C;Ask a Question&#x201D; form on every product page and allows your store visitors to acquire all the required information.&#xD;
+&#xD;
+2) All the queries along with the replies are displayed below product description. It will be quite useful for customers to refer to previous queries asked by other visitors and dig out some additional information regarding the item.&#xD;
+&#xD;
+3) Email notifications to a customer when admin has responded to the customer&#x2019;s question&#xD;
+&#xD;
+4) Allows the user to select multiple store/website from the &#x201C;Store View&#x201D; option. It will facilitate the admin to display the response for the same question in various sites. &#xD;
+&#xD;
+5) As visitors get answers to questions right from your product page, it increases the overall customer satisfaction with your store and service may lead to sales as well as word-of-mouth for you Magento store.  &#xD;
+&#xD;
+6) Here the user will be able to Sort the question-answers by &#x201C;Newest First&#x201D; and &#x201C;Oldest First&#xD;
+&#xD;
+7) The user will be able to find a special tab &#x201C;Product Questions&#x201D; tab in My Account, where he will be able to view whether the question is approved and answered, check the status of the replies, and see the link of the products he has discussed.&#xD;
+&#xD;
+8) Like-Dislike feature for users to rate helpfulness&#xD;
+&#xD;
+9) User can search a particular question-answer from the search option given here and in result page that searched keyword will be highlighted.</description>
+    <notes>This is first stable version</notes>
+    <authors><author><name>Iverve</name><user>iverve</user><email>extension.geek@ifuturz.com</email></author></authors>
+    <date>2015-01-26</date>
+    <time>12:00:45</time>
+    <contents><target name="mageetc"><dir name="modules"><file name="Ifuturz_Questionanswer.xml" hash="55aedd4e9da5c9ba631b86ea0041ca35"/></dir></target><target name="magelocal"><dir name="Ifuturz"><dir name="Questionanswer"><dir name="Block"><dir name="Adminhtml"><dir name="Questionanswer"><dir name="Edit"><file name="Edit.php" hash="3460d9124fc6b96f9a122ae839deffa0"/><file name="Form.php" hash="b585dbf63b419eaecbe2db0643a1f564"/><dir name="Tab"><file name="Form.php" hash="09a79c10506ba8de088b449f137d17a8"/></dir><file name="Tabs.php" hash="85b15043650897679d9b469c2ec39d82"/></dir><file name="Edit.php" hash="3460d9124fc6b96f9a122ae839deffa0"/><file name="Grid.php" hash="78eebc44212068f55f7ed276ea3ed6eb"/></dir><file name="Questionanswer.php" hash="2383771f591fd2c985a1261db4929124"/></dir><file name="Questionanswer.php" hash="976842fe4d6d55790627d88aaaff89ff"/></dir><dir name="Helper"><file name="Data.php" hash="124155d352c880c9aab2d989dac933c3"/></dir><dir name="Model"><file name="Likedislike.php" hash="cc77f99c63efededc03b5ab88bb1b267"/><dir name="Mysql4"><dir name="Likedislike"><file name="Collection.php" hash="dda2b6322f2850c7ed9b6c7b7329788f"/></dir><file name="Likedislike.php" hash="53472ce14e2a9fdab48f96ffffe4f46d"/><dir name="Questionanswer"><file name="Collection.php" hash="ca5bf89b87aa408c9f92093cb2d12b11"/></dir><file name="Questionanswer.php" hash="02a859275c940b689f32ef19b13d1c99"/></dir><file name="Observer.php" hash="e15356d0262e40540fa21bc51ee71dbc"/><file name="Questionanswer.php" hash="4a74426f2d0451dd506d7743ab66c8ab"/></dir><dir name="controllers"><dir name="Adminhtml"><file name="QuestionanswerController.php" hash="00a14cd78ae3b78e86d6dd7cd3a8e39e"/></dir><file name="IndexController.php" hash="1815b1369f20f2ff184b4b71d313e889"/></dir><dir name="etc"><file name="config.xml" hash="7e39b8c0c307c469125cc778a9243c3a"/></dir><dir name="sql"><dir name="questionanswer_setup"><file name="mysql4-install-0.1.0.php" hash="d8d7148d64504db234764b4a60b12048"/><file name="mysql4-upgrade-0.1.0-0.1.1.php" hash="a062aacc0870355924a4ec8b3e2ad999"/></dir></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="questionanswer.xml" hash="05befdd50d5601d0c6c907c3a3d71afc"/></dir><dir name="template"><dir name="questionanswer"><file name="form.phtml" hash="639bce0c781d5e1539b9226bc276caba"/></dir></dir></dir></dir></dir><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="questionanswer"><file name="form.phtml" hash="d80997f59e56f13eb197b18c3e2498f7"/><file name="newquestion.phtml" hash="f645bfe33297d60e3e04362160143f95"/><file name="questionanswer_list.phtml" hash="6d6af6b77d7671dcd34e6eed42b4aae3"/></dir></dir><dir name="layout"><file name="questionanswer.xml" hash="9cdb850844cf718dfd27eec878229040"/></dir></dir></dir></dir></target><target name="magelocale"><dir name="en_US"><dir name="template"><dir name="email"><file name="question_answer.html" hash="a76eb8f55f872956dc0f5a1b7f383a11"/></dir></dir></dir></target><target name="mageskin"><dir name="frontend"><dir name="base"><dir name="default"><dir name="js"><dir name="questionanswer"><file name="jquery-1.7.1.min.js" hash="4bab8348a52d17428f684ad1ec3a427e"/><file name="jquery_noconflict.js" hash="afdd9b4ecb226d898fe655136f849752"/></dir></dir><dir name="css"><dir name="questionanswer"><file name="ProductQA.css" hash="b3bdebbfaf3a797ea823d3a9aeca435b"/><file name="font-awesome.min.css" hash="feda974a77ea5783b8be673f142b7c88"/></dir><dir name="fonts"><file name="FontAwesome.otf" hash="19231917733e2bcdf257c9be99cdbaf1"/><file name="fontawesome-webfont.eot" hash="7149833697a959306ec3012a8588dcfa"/><file name="fontawesome-webfont.svg" hash="65bcbc899f379216109acd0b6c494618"/><file name="fontawesome-webfont.ttf" hash="c4668ed2440df82d3fd2f8be9d31d07d"/><file name="fontawesome-webfont.woff" hash="d95d6f5d5ab7cfefd09651800b69bd54"/></dir></dir><dir name="images"><dir name="questionanswer"><file name="chat_image.png" hash="208ff6087ee59ede92daae178b1c2996"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
