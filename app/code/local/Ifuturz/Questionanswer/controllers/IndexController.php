@@ -14,8 +14,8 @@ class Ifuturz_Questionanswer_IndexController extends Mage_Core_Controller_Front_
 	
 		if ($data = $this->getRequest()->getPost()) 
 		{	
-			$pageurl = $this->getRequest()->getParam('currenturl');
-			$producturl = explode('index.php/',$pageurl);			
+			$pageurl = $this->getRequest()->getParam('currenturl');			
+			$producturl = substr($pageurl, strlen(Mage::getBaseUrl()));						
 			$model = Mage::getModel('questionanswer/questionanswer');		
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
@@ -29,13 +29,11 @@ class Ifuturz_Questionanswer_IndexController extends Mage_Core_Controller_Front_
 				else
 				{
 					$model->setUpdatedAt(now());
-				}
-				
+				}				
 				$model->save();
 				Mage::getSingleton('core/session')->addSuccess(Mage::helper('questionanswer')->__('Question was successfully Submitted'));
 				Mage::getSingleton('core/session')->setFormData(false);
-				//$this->_redirect('*/*/');
-				$this->_redirect($producturl[1]);
+				$this->_redirect($producturl);
 				return;
             }
 			catch (Exception $e) 
@@ -46,9 +44,8 @@ class Ifuturz_Questionanswer_IndexController extends Mage_Core_Controller_Front_
                 return;
             }
         }
-        Mage::getSingleton('core/session')->addError(Mage::helper('questionanswer')->__('Unable to find Question to save'));
-        //$this->_redirect('*/*/');	
-		$this->_redirect($producturl[1]);
+        Mage::getSingleton('core/session')->addError(Mage::helper('questionanswer')->__('Unable to find Question to save'));        
+		$this->_redirect($producturl);
 	}
 	
 	public function filterAction()

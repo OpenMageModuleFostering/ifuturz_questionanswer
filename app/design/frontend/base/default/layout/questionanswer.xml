@@ -7,8 +7,11 @@
 			<action method="addItem"><type>skin_css</type><name>css/questionanswer/ProductQA.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/questionanswer/font-awesome.min.css</name></action>			
 		</reference>
-	   	<reference name="content">
-			<block type="questionanswer/questionanswer" as="questionanswerAs" template="questionanswer/form.phtml" after="product.description"/>
+	   	<reference name="product.info">			
+			<block type="questionanswer/questionanswer" name="product.questionanswer" as="questionanswerAs" template="questionanswer/form.phtml">
+                    <action method="addToParentGroup"><group>detailed_info</group></action>
+                    <action method="setTitle" translate="value"><value>Product's Question Answer</value></action>
+            </block>				
 		</reference>
     </catalog_product_view>
 	<customer_account>	 	
