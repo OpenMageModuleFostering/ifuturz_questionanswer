@@ -100,8 +100,7 @@ class Ifuturz_Questionanswer_Adminhtml_QuestionanswerController extends Mage_Adm
 				
 				if($data['send_mail']=='yes' && $prev_status=='no')
 				{
-					//start code to send a mail					
-					
+					//start code to send a mail										
 					$emailTemplate = Mage::getModel('core/email_template')->loadDefault('queans_template');	
 					$productload = Mage::getModel('catalog/product')->load($model->getProductId());					
 			   

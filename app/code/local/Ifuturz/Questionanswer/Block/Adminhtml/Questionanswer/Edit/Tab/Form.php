@@ -31,7 +31,7 @@ class Ifuturz_Questionanswer_Block_Adminhtml_Questionanswer_Edit_Tab_Form extend
           'required'  => true,
           'name'      => 'name',
 		  'values'    => $name ,
-		  'disabled' => true,		 		
+		  'readonly' => true,		 		
       ));
 
 	  
@@ -41,7 +41,7 @@ class Ifuturz_Questionanswer_Block_Adminhtml_Questionanswer_Edit_Tab_Form extend
           'required'  => true,
           'name'      => 'email',
 		  'values'    => $email,
-		  'disabled' => true, 	
+		  'readonly' => true, 	
 		 )); 
 		 
 		$fieldset->addField('location', 'text', array(
